@@ -1,7 +1,7 @@
-import Vue from 'vue'
 import {
   Button,
   Select,
+  Option,
   Container,
   Aside,
   Menu,
@@ -17,12 +17,15 @@ import {
   TableColumn,
   Form,
   FormItem,
-  Input
+  Input,
+  Message,
+  MessageBox
 } from 'element-ui'
 
-export default () => {
+export default Vue => {
   Vue.use(Button)
   Vue.use(Select)
+  Vue.use(Option)
   Vue.use(Container)
   Vue.use(Aside)
   Vue.use(Menu)
@@ -39,4 +42,7 @@ export default () => {
   Vue.use(Form)
   Vue.use(FormItem)
   Vue.use(Input)
+
+  Vue.prototype.$message = Message
+  Vue.prototype.$confirm = MessageBox
 }

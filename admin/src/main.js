@@ -5,7 +5,7 @@ import store from './store'
 import elem from './elementui'
 import http from './axios'
 
-elem()
+elem(Vue)
 Vue.config.productionTip = false
 Vue.prototype.$http = http
 
