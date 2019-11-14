@@ -4,6 +4,8 @@ import Main from '../views/Main.vue'
 
 const CategoryEdit = () => import('../views/CategoryEdit.vue')
 const CategoryList = () => import('../views/CategoryList.vue')
+const GoodsEdit = () => import('../views/GoodsEdit.vue')
+const GoodsList = () => import('../views/GoodsList.vue')
 
 Vue.use(VueRouter)
 
@@ -25,6 +27,19 @@ const routes = [
       {
         path: 'categories/list',
         component: CategoryList
+      },
+      {
+        path: 'goods/edit/:id',
+        component: GoodsEdit,
+        props: true
+      },
+      {
+        path: 'goods/edit',
+        component: GoodsEdit
+      },
+      {
+        path: 'goods/list',
+        component: GoodsList
       }
     ]
   }
