@@ -3,7 +3,8 @@ module.exports = app => {
 
   mongoose.connect('mongodb://127.0.0.1:27017/node-vue-lolm', {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify: false
   })
 
   const db = mongoose.connection

@@ -1,11 +1,14 @@
 const koa = require('koa')
 const cors = require('koa2-cors') // 跨域
 const bodyParser = require('koa-bodyparser')
+const static = require('koa-static')
+const path = require('path')
 
 const app = new koa()
 
 app.use(cors())
 app.use(bodyParser())
+app.use(static(path.join(__dirname, './public/'))) // 静态资源访问
 
 // mongo
 require('./mongo/db')(app)

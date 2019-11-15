@@ -1,23 +1,26 @@
 <template>
   <div class="about">
-    <h2>{{ id ? '编辑' : '新建' }}分类</h2>
+    <h2>{{ id ? '编辑' : '新建' }}文章</h2>
     <el-form
       @submit.native.prevent="save"
       label-position="right"
       label-width="80px"
     >
-      <el-form-item label="上级分类">
-        <el-select v-model="model.parent" placeholder="请选择">
+      <el-form-item label="所属分类">
+        <el-select v-model="model.categories" multiple placeholder="请选择">
           <el-option
-            v-for="item in parents"
+            v-for="item in categories"
             :key="item._id"
             :label="item.name"
             :value="item._id"
           ></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="名称">
-        <el-input v-model.trim="model.name"></el-input>
+      <el-form-item label="标题">
+        <el-input v-model.trim="model.title"></el-input>
+      </el-form-item>
+      <el-form-item label="详情">
+        <el-input v-model.trim="model.body"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" native-type="submit">保存</el-button>
@@ -32,51 +35,52 @@ export default {
   data() {
     return {
       model: {
-        name: '',
-        parent: ''
+        title: '',
+        body: '',
+        categories: []
       },
-      parents: []
+      categories: []
     }
   },
   methods: {
     async save() {
       let res
-      // 未输入名称
-      if (!this.model.name) {
+      // 未输入标题
+      if (!this.model.title) {
         this.$message({
           type: 'warning',
-          message: '请输入名称'
+          message: '请输入标题'
         })
         return
       }
       // 是否是编辑
       if (this.id) {
-        res = await this.$http.put(`rest/categories/${this.id}`, this.model)
+        res = await this.$http.put(`rest/articles/${this.id}`, this.model)
       } else {
-        res = await this.$http.post('rest/categories', this.model)
+        res = await this.$http.post('rest/articles', this.model)
       }
       console.log(res)
-      this.$router.push('/categories/list')
+      this.$router.push('/articles/list')
       this.$message({
         type: 'success',
         message: '保存成功'
       })
     },
     async fetch() {
-      let res = await this.$http.get(`rest/categories/${this.id}`)
+      let res = await this.$http.get(`rest/articles/${this.id}`)
       this.model = res.data
     },
-    async fetchParents() {
+    async fetchCategories() {
       let res = await this.$http.get('rest/categories')
-      this.parents = res.data
+      this.categories = res.data
     }
   },
   // 处理菜单点击渲染未正常显示bug
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      vm.model = { name: '', parent: '' }
-      vm.parents = []
-      vm.fetchParents()
+      vm.model = { title: '', body: '', categories: [] }
+      vm.categories = []
+      vm.fetchCategories()
       vm.id && vm.fetch()
     })
   }

@@ -19,7 +19,13 @@ import {
   FormItem,
   Input,
   Message,
-  MessageBox
+  MessageBox,
+  Upload,
+  Rate,
+  Tabs,
+  TabPane,
+  Row,
+  Col
 } from 'element-ui'
 
 export default Vue => {
@@ -42,6 +48,12 @@ export default Vue => {
   Vue.use(Form)
   Vue.use(FormItem)
   Vue.use(Input)
+  Vue.use(Upload)
+  Vue.use(Rate)
+  Vue.use(Tabs)
+  Vue.use(TabPane)
+  Vue.use(Row)
+  Vue.use(Col)
 
   Vue.prototype.$message = Message
   Vue.prototype.$confirm = MessageBox

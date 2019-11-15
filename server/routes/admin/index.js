@@ -2,6 +2,9 @@ module.exports = app => {
   const Router = require('koa-router')
   const router = new Router()
   const restrouter = new Router()
+  const uploadrouter = new Router()
+  const multer = require('koa-multer')
+  const path = require('path')
 
   restrouter.post('/', async ctx => {
     const { request: req } = ctx
@@ -33,7 +36,7 @@ module.exports = app => {
     const items = await ctx.Model.find()
       // .populate('parent') // 关联查询
       .setOptions(queryOptions)
-      .limit(10)
+      .limit(20)
     ctx.body = items
   })
 
@@ -58,4 +61,15 @@ module.exports = app => {
   )
 
   app.use(router.routes()).use(router.allowedMethods())
+
+  // 单独处理
+  const upload = multer({
+    dest: path.resolve(__dirname, '../../public/uploads')
+  })
+  uploadrouter.post('/admin/api/upload', upload.single('file'), async ctx => {
+    const file = ctx.req.file
+    file.url = `http://localhost:3000/uploads/${file.filename}`
+    ctx.body = file
+  })
+  app.use(uploadrouter.routes()).use(router.allowedMethods())
 }

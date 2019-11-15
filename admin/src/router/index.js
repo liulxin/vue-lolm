@@ -6,6 +6,10 @@ const CategoryEdit = () => import('../views/CategoryEdit.vue')
 const CategoryList = () => import('../views/CategoryList.vue')
 const GoodsEdit = () => import('../views/GoodsEdit.vue')
 const GoodsList = () => import('../views/GoodsList.vue')
+const HerosEdit = () => import('../views/HerosEdit.vue')
+const HerosList = () => import('../views/HerosList.vue')
+const ArticlesEdit = () => import('../views/ArticlesEdit.vue')
+const ArticlesList = () => import('../views/ArticlesList.vue')
 
 Vue.use(VueRouter)
 
@@ -40,6 +44,32 @@ const routes = [
       {
         path: 'goods/list',
         component: GoodsList
+      },
+      {
+        path: 'heros/edit/:id',
+        component: HerosEdit,
+        props: true
+      },
+      {
+        path: 'heros/edit',
+        component: HerosEdit
+      },
+      {
+        path: 'heros/list',
+        component: HerosList
+      },
+      {
+        path: 'articles/edit/:id',
+        component: ArticlesEdit,
+        props: true
+      },
+      {
+        path: 'articles/edit',
+        component: ArticlesEdit
+      },
+      {
+        path: 'articles/list',
+        component: ArticlesList
       }
     ]
   }

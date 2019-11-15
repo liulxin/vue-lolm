@@ -1,7 +1,11 @@
 <template>
   <div class="about">
     <h2>{{ id ? '编辑' : '新建' }}物品</h2>
-    <el-form @submit.native.prevent="save" label-position="right" label-width="80px">
+    <el-form
+      @submit.native.prevent="save"
+      label-position="right"
+      label-width="80px"
+    >
       <!-- <el-form-item label="上级分类">
         <el-select v-model="model.parent" placeholder="请选择">
           <el-option
@@ -16,8 +20,18 @@
         <el-input v-model.trim="model.name"></el-input>
       </el-form-item>
       <el-form-item label="图标">
-        <el-input v-model.trim="model.icon"></el-input>
+        <el-upload
+          class="avatar-uploader"
+          :action="`${$http.defaults.baseURL}/upload`"
+          :show-file-list="false"
+          :on-success="handleAvatarSuccess"
+          :before-upload="beforeAvatarUpload"
+        >
+          <img v-if="model.icon" :src="model.icon" class="avatar" />
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
       </el-form-item>
+
       <el-form-item>
         <el-button type="primary" native-type="submit">保存</el-button>
       </el-form-item>
@@ -30,7 +44,10 @@ export default {
   props: ['id'],
   data() {
     return {
-      model: {}
+      model: {
+        name: '',
+        icon: ''
+      }
     }
   },
   methods: {
@@ -60,14 +77,32 @@ export default {
     async fetch() {
       let res = await this.$http.get(`rest/goods/${this.id}`)
       this.model = res.data
+    },
+    handleAvatarSuccess(res, file) {
+      // this.$set(this.model, 'icon', res.url)
+      this.model.icon = res.url
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === 'image/jpeg' || file.type === 'image/png'
+      const isLt2M = file.size / 1024 / 1024 < 2
+
+      if (!isJPG) {
+        this.$message.error('上传物品图片只能是 JPG | PNG 格式!')
+      }
+      if (!isLt2M) {
+        this.$message.error('上传物品图片大小不能超过 2MB!')
+      }
+      return isJPG && isLt2M
     }
   },
   // 处理菜单点击渲染未正常显示bug
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      vm.model = {}
+      vm.model = { name: '', icon: '' }
       vm.id && vm.fetch()
     })
   }
 }
 </script>
+
+<style lang="scss" scoped></style>
