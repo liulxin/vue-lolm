@@ -12,6 +12,8 @@ const ArticlesEdit = () => import('../views/ArticlesEdit.vue')
 const ArticlesList = () => import('../views/ArticlesList.vue')
 const AdsEdit = () => import('../views/AdsEdit.vue')
 const AdsList = () => import('../views/AdsList.vue')
+const AdminUserEdit = () => import('../views/AdminUserEdit.vue')
+const AdminUserList = () => import('../views/AdminUserList.vue')
 
 Vue.use(VueRouter)
 
@@ -85,6 +87,19 @@ const routes = [
       {
         path: 'ads/list',
         component: AdsList
+      },
+      {
+        path: 'admin_user/edit/:id',
+        component: AdminUserEdit,
+        props: true
+      },
+      {
+        path: 'admin_user/edit',
+        component: AdminUserEdit
+      },
+      {
+        path: 'admin_user/list',
+        component: AdminUserList
       }
     ]
   }
