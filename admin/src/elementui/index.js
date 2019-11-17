@@ -25,7 +25,8 @@ import {
   Tabs,
   TabPane,
   Row,
-  Col
+  Col,
+  Card
 } from 'element-ui'
 
 export default Vue => {
@@ -54,6 +55,7 @@ export default Vue => {
   Vue.use(TabPane)
   Vue.use(Row)
   Vue.use(Col)
+  Vue.use(Card)
 
   Vue.prototype.$message = Message
   Vue.prototype.$confirm = MessageBox
