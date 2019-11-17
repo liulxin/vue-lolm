@@ -31,7 +31,17 @@ const schema = new mongoose.Schema({
   goods2: [{ type: mongoose.SchemaTypes.ObjectId, ref: 'Goods' }],
   usageTips: { type: String },
   battleTips: { type: String },
-  tale: { type: String }
+  tale: { type: String },
+  skins: [
+    {
+      name: {
+        type: String
+      },
+      pic: {
+        type: String
+      }
+    }
+  ]
 })
 
 module.exports = mongoose.model('Heros', schema)

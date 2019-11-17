@@ -25,14 +25,14 @@ body {
     .avatar-uploader-icon {
       font-size: 28px;
       color: #8c939d;
-      width: 178px;
-      height: 178px;
-      line-height: 178px;
+      min-width: 65px;
+      height: 65px;
+      line-height: 65px;
       text-align: center;
     }
     .avatar {
-      width: 178px;
-      height: 178px;
+      min-width: 65px;
+      height: 65px;
       display: block;
     }
   }

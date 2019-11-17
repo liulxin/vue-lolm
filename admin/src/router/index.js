@@ -10,6 +10,8 @@ const HerosEdit = () => import('../views/HerosEdit.vue')
 const HerosList = () => import('../views/HerosList.vue')
 const ArticlesEdit = () => import('../views/ArticlesEdit.vue')
 const ArticlesList = () => import('../views/ArticlesList.vue')
+const AdsEdit = () => import('../views/AdsEdit.vue')
+const AdsList = () => import('../views/AdsList.vue')
 
 Vue.use(VueRouter)
 
@@ -70,6 +72,19 @@ const routes = [
       {
         path: 'articles/list',
         component: ArticlesList
+      },
+      {
+        path: 'ads/edit/:id',
+        component: AdsEdit,
+        props: true
+      },
+      {
+        path: 'ads/edit',
+        component: AdsEdit
+      },
+      {
+        path: 'ads/list',
+        component: AdsList
       }
     ]
   }
