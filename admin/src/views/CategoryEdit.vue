@@ -50,11 +50,22 @@ export default {
         return
       }
       // 是否是编辑
-      if (this.id) {
-        res = await this.$http.put(`rest/categories/${this.id}`, this.model)
+      if (this.model.parent) {
+        if (this.id) {
+          res = await this.$http.put(`rest/categories/${this.id}`, this.model)
+        } else {
+          res = await this.$http.post('rest/categories', this.model)
+        }
       } else {
-        res = await this.$http.post('rest/categories', this.model)
+        let obj = JSON.parse(JSON.stringify(this.model))
+        delete obj.parent
+        if (this.id) {
+          res = await this.$http.put(`rest/categories/${this.id}`, obj)
+        } else {
+          res = await this.$http.post('rest/categories', obj)
+        }
       }
+
       console.log(res)
       this.$router.push('/categories/list')
       this.$message({

@@ -6,7 +6,14 @@ const path = require('path')
 
 const app = new koa()
 
-app.use(cors())
+app.context.secret = 'ads12dfsuyt' // token 签名
+
+app.use(
+  cors({
+    credentials: true,
+    allowMethods: ['GET', 'POST', 'DELETE', 'OPTIONS']
+  })
+)
 app.use(bodyParser())
 app.use(static(path.join(__dirname, './public/'))) // 静态资源访问
 

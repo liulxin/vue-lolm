@@ -2,7 +2,7 @@
   <div class="about">
     <h2>管理员列表</h2>
     <el-table :data="items">
-      <el-table-column prop="_id" label="ID" width="220"> </el-table-column>
+      <el-table-column prop="_id" label="ID" width="230"> </el-table-column>
       <el-table-column prop="username" label="用户名"> </el-table-column>
       <el-table-column fixed="right" label="操作" width="150">
         <template slot-scope="scope">
@@ -34,7 +34,7 @@ export default {
       this.items = res.data
     },
     remove(row) {
-      this.$confirm(`是否要删除分类 "${row.name}" ?`, '提示', {
+      this.$confirm(`是否要删除分类 "${row.username}" ?`, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
