@@ -1,0 +1,156 @@
+* {
+  box-sizing: border-box;
+  outline: none;
+}
+
+html {
+  font-size: 13px;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.2em;
+  background: #f1f1f1;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: #999;
+}
+
+// colors
+$colors: (
+  'primary': #0da0b4,
+  'white': #fff,
+  'black': #000,
+  'dark': #222,
+  'dark-1': #343440,
+  'grey': #999,
+  'grey-1': #666,
+  'light': #f9f9f9
+);
+
+@each $colorKey, $color in $colors {
+  .text-#{$colorKey} {
+    color: $color;
+  }
+  .bg-#{$colorKey} {
+    background-color: $color;
+  }
+}
+
+// text
+@each $var in (left, center, right) {
+  .text-#{$var} {
+    text-align: $var;
+  }
+}
+
+$base-font-size: 1rem;
+$font-sizes: (
+  xss: 0.6154,
+  xs: 0.7143,
+  sm: 0.8571,
+  md: 1,
+  lg: 1.0769,
+  xl: 1.2308
+);
+@each $sizeKey, $size in $font-sizes {
+  .fs-#{$sizeKey} {
+    font-size: $size * $base-font-size;
+  }
+}
+
+// flex
+.d-flex {
+  display: flex;
+}
+.flex-column {
+  flex-direction: column;
+}
+
+$flex-jc: (
+  start: flex-start,
+  end: flex-end,
+  center: center,
+  between: space-between,
+  around: space-around
+);
+
+@each $key, $value in $flex-jc {
+  .jc-#{$key} {
+    justify-content: $value;
+  }
+}
+
+$flex-ai: (
+  start: flex-start,
+  end: flex-end,
+  center: center,
+  stretch: stretch
+);
+@each $key, $value in $flex-ai {
+  .ai-#{$key} {
+    align-items: $value;
+  }
+}
+
+.flex-1 {
+  flex: 1;
+}
+.flex-grow-1 {
+  flex-grow: 1;
+}
+
+// spacing
+$spacing-types: (
+  m: margin,
+  p: padding
+);
+$spacing-directions: (
+  t: top,
+  l: left,
+  b: bottom,
+  r: right
+);
+$spacing-base-size: 1rem;
+$spacing-sizes: (
+  0: 0,
+  1: 0.25,
+  2: 0.5,
+  3: 1,
+  4: 1.5,
+  5: 3
+);
+
+@each $typeKey, $type in $spacing-types {
+  // .m-1
+  @each $sizeKey, $size in $spacing-sizes {
+    .#{$typeKey}-#{$sizeKey} {
+      #{$type}: $spacing-base-size * $size;
+    }
+  }
+  // .mx-1
+  @each $sizeKey, $size in $spacing-sizes {
+    .#{$typeKey}x-#{$sizeKey} {
+      #{$type}-left: $spacing-base-size * $size;
+      #{$type}-right: $spacing-base-size * $size;
+    }
+  }
+  // .my-1
+  @each $sizeKey, $size in $spacing-sizes {
+    .#{$typeKey}y-#{$sizeKey} {
+      #{$type}-top: $spacing-base-size * $size;
+      #{$type}-bottom: $spacing-base-size * $size;
+    }
+  }
+  // .mt-1
+  @each $directionKey, $direction in $spacing-directions {
+    @each $sizeKey, $size in $spacing-sizes {
+      .#{$typeKey}#{$directionKey}-#{$sizeKey} {
+        #{$type}-#{$direction}: $spacing-base-size * $size;
+      }
+    }
+  }
+}
