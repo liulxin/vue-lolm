@@ -70,7 +70,6 @@ export default {
   },
   methods: {
     async save() {
-      let res
       // 未输入名称
       if (!this.model.name) {
         this.$message({
@@ -81,11 +80,11 @@ export default {
       }
       // 是否是编辑
       if (this.id) {
-        res = await this.$http.put(`rest/ads/${this.id}`, this.model)
+        await this.$http.put(`rest/ads/${this.id}`, this.model)
       } else {
-        res = await this.$http.post('rest/ads', this.model)
+        await this.$http.post('rest/ads', this.model)
       }
-      console.log(res)
+      // console.log(this.model)
       this.$router.push('/ads/list')
       this.$message({
         type: 'success',

@@ -8,7 +8,9 @@ module.exports = app => {
   // const Category = require('../../models/categories')
   const Category = mongoose.model('Category')
   const Article = mongoose.model('Article')
+  const Ad = mongoose.model('Ad')
 
+  // 导入新闻数据
   webrouter.get('/news/init', async ctx => {
     const parent = await Category.findOne({
       name: '新闻资讯'
@@ -57,6 +59,7 @@ module.exports = app => {
     ctx.body = newsList
   })
 
+  // 获取新闻数据
   webrouter.get('/news/list', async ctx => {
     // const cats = await Category.findOne({
     //   name: '新闻资讯'
@@ -108,6 +111,55 @@ module.exports = app => {
       return cat
     })
     ctx.body = cats
+  })
+
+  // 导入轮播数据
+  webrouter.get('/ads/init', async ctx => {
+    const ads = {
+      name: '轮播',
+      items: [
+        {
+          image:
+            'http://localhost:3000/uploads/acb3856fbe12a5fc92891c546d801072',
+          title: '奇亚娜 至臻',
+          url: 'https://lol.qq.com/act/a20191106truedamage/index.html'
+        },
+        {
+          image:
+            'http://localhost:3000/uploads/1f67f610dc01c5805025e2a69be8307a',
+          title: '真实伤害盛大登场',
+          url: 'https://lol.qq.com/act/a20191106truedamage/index.html'
+        },
+        {
+          image:
+            'http://localhost:3000/uploads/da6b0ab9941cd7204e99e21f2c41dd91',
+          title: '2020LPL裁判招募',
+          url: 'https://lol.qq.com/act/a20191106truedamage/index.html'
+        },
+        {
+          image:
+            'http://localhost:3000/uploads/994dee028ce4567bc3cf9d8437c05a2c',
+          title: 'LPL全明星周末售票',
+          url: 'https://lol.qq.com/act/a20191106truedamage/index.html'
+        },
+        {
+          image:
+            'http://localhost:3000/uploads/c556b9ffaa158346bff01584d5446ad5',
+          title: '夺冠庆典现已开启',
+          url: 'https://lol.qq.com/act/a20191106truedamage/index.html'
+        }
+      ]
+    }
+    await Ad.deleteMany({ name: '轮播' })
+    await Ad.insertMany(ads)
+    ctx.body = ads
+  })
+
+  // 获取轮播数据
+  webrouter.get('/ads/list', async ctx => {
+    const ads = await Ad.find({ name: '轮播' }).lean()
+    const list = ads.length ?  ads[0].items : []
+    ctx.body = list
   })
 
   router.use('/web/api', webrouter.routes(), webrouter.allowedMethods())

@@ -11,7 +11,7 @@ app.context.secret = 'ads12dfsuyt' // token 签名
 app.use(
   cors({
     credentials: true,
-    allowMethods: ['GET', 'POST', 'DELETE', 'OPTIONS']
+    allowMethods: ['GET', 'POST', 'DELETE', 'OPTIONS', 'PUT']
   })
 )
 app.use(bodyParser())

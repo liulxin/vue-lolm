@@ -2,28 +2,12 @@
   <div class="home">
     <swiper :options="swiperOption" ref="mySwiper">
       <!-- slides -->
-      <swiper-slide
-        ><img
-          class="w-100"
-          src="../assets/images/4a58edb6a3c9e03a711cb9da5b8702e7.jpeg"
-          alt=""
-      /></swiper-slide>
-      <swiper-slide
-        ><img
-          class="w-100"
-          src="../assets/images/4a58edb6a3c9e03a711cb9da5b8702e7.jpeg"
-          alt=""
-      /></swiper-slide>
-      <swiper-slide
-        ><img
-          class="w-100"
-          src="../assets/images/4a58edb6a3c9e03a711cb9da5b8702e7.jpeg"
-          alt=""
-      /></swiper-slide>
-      <div
-        class="swiper-pagination pagination-home text-right px-3 pb-1"
-        slot="pagination"
-      ></div>
+      <swiper-slide v-for="ad in adsList" :key="ad._id">
+        <a class="ads-a" :href="ad.url">
+          <img class="w-100" :src="ad.image" alt="" />
+        </a>
+      </swiper-slide>
+      <div class="swiper-pagination pagination-home text-right px-3 pb-1" slot="pagination"></div>
     </swiper>
     <!-- end of swiper -->
     <div class="nav-icons bg-white mt-3  text-center pt-3 text-dark-1 fs-xs">
@@ -57,27 +41,17 @@
           <div>微信绑定</div>
         </div>
       </div>
-      <div
-        class="bg-light py-2 fs-sm text-center text-primary"
-        @click="collapse = !collapse"
-      >
-        <i
-          class="sprite sprite-9"
-          :class="{ 'rotate--90': collapse, 'rotate-90': !collapse }"
-        ></i>
+      <div class="bg-light py-2 fs-sm text-center text-primary" @click="collapse = !collapse">
+        <i class="sprite sprite-9" :class="{ 'rotate--90': collapse, 'rotate-90': !collapse }"></i>
         {{ collapse ? '收起' : '展开' }}
       </div>
     </div>
     <!-- end of icons -->
     <list-card title="新闻资讯" :categories="newsCats">
       <template #items="{category}">
-        <div
-          class="py-2 d-flex"
-          v-for="(news, i) in category.newsList"
-          :key="i"
-        >
+        <div class="py-2 d-flex" v-for="(news, i) in category.newsList" :key="i">
           <span class="text-primary">[{{ news.categoryName }}]</span>
-          <span class="px-2">|</span>
+          <span class="px-1"></span>
           <span class="flex-1 text-ellipse text-dark-1">{{ news.title }}</span>
           <span class="text-grey fs-sm">{{ news.createdAt | date }}</span>
         </div>
@@ -103,16 +77,22 @@ export default {
         }
       },
       collapse: true,
-      newsCats: []
+      newsCats: [],
+      adsList: []
     }
   },
   created() {
     this.fetchNewsCats()
+    this.fetchAdsList()
   },
   methods: {
     async fetchNewsCats() {
       let res = await this.$http.get('news/list')
       this.newsCats = res.data
+    },
+    async fetchAdsList() {
+      let res = await this.$http.get('ads/list')
+      this.adsList = res.data
     }
   },
   components: {
@@ -123,7 +103,9 @@ export default {
 
 <style lang="scss">
 @import '../assets/scss/variables';
-
+.ads-a{
+  display: inline-block;
+}
 .pagination-home {
   .swiper-pagination-bullet {
     opacity: 1;
