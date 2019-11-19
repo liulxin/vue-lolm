@@ -71,10 +71,15 @@
     <!-- end of icons -->
     <list-card title="新闻资讯" :categories="newsCats">
       <template #items="{category}">
-        <div class="py-2" v-for="(news, i) in category.newsList" :key="i">
-          <span>{{ news.categoryName }}</span>
-          <span>{{ news.title }}</span>
-          <span>{{ news.date }}</span>
+        <div
+          class="py-2 d-flex"
+          v-for="(news, i) in category.newsList"
+          :key="i"
+        >
+          <span class="text-primary">[{{ news.categoryName }}]</span>
+          <span class="px-2">|</span>
+          <span class="flex-1 text-ellipse text-dark-1">{{ news.title }}</span>
+          <span class="text-grey fs-sm">{{ news.createdAt | date }}</span>
         </div>
       </template>
     </list-card>
@@ -83,7 +88,13 @@
 
 <script>
 import ListCard from '../components/ListCard'
+import dayjs from 'dayjs'
 export default {
+  filters: {
+    date(val) {
+      return dayjs(val).format('MM-DD')
+    }
+  },
   data() {
     return {
       swiperOption: {
@@ -92,24 +103,16 @@ export default {
         }
       },
       collapse: true,
-      newsCats: [
-        {
-          name: '热门',
-          newsList: new Array(5).fill(0).map(v => ({
-            categoryName: '公告',
-            title: 'LPL全明星看点十足 精彩对决一网打尽',
-            date: '11-08'
-          }))
-        },
-        {
-          name: '新闻',
-          newsList: new Array(5).fill(0).map(v => ({
-            categoryName: '新闻',
-            title: 'LPL全明星看点十足 精彩对决一网打尽',
-            date: '11-08'
-          }))
-        }
-      ]
+      newsCats: []
+    }
+  },
+  created() {
+    this.fetchNewsCats()
+  },
+  methods: {
+    async fetchNewsCats() {
+      let res = await this.$http.get('news/list')
+      this.newsCats = res.data
     }
   },
   components: {

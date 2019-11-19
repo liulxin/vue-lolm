@@ -19,9 +19,9 @@ app.use(static(path.join(__dirname, './public/'))) // 静态资源访问
 
 // mongo
 require('./mongo/db')(app)
-
 // routes
 require('./routes/admin')(app)
+require('./routes/web')(app)
 
 app.listen(3000, () => {
   console.log('serve is running at: http://localhost:3000')
