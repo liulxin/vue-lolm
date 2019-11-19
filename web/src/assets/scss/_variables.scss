@@ -1,0 +1,61 @@
+// colors
+$colors: (
+  'primary': #0da0b4,
+  'info': #4b67af,
+  'white': #fff,
+  'black': #000,
+  'dark': #222,
+  'dark-1': #343440,
+  'grey': #999,
+  'grey-1': #666,
+  'light': #f9f9f9,
+  'light-1': #d4d9de
+);
+
+$border-color: map-get($colors, 'light-1');
+
+$base-font-size: 1rem;
+$font-sizes: (
+  xss: 0.6154,
+  xs: 0.7143,
+  sm: 0.8571,
+  md: 1,
+  lg: 1.0769,
+  xl: 1.2308
+);
+
+$flex-jc: (
+  start: flex-start,
+  end: flex-end,
+  center: center,
+  between: space-between,
+  around: space-around
+);
+
+$flex-ai: (
+  start: flex-start,
+  end: flex-end,
+  center: center,
+  stretch: stretch
+);
+
+// spacing
+$spacing-types: (
+  m: margin,
+  p: padding
+);
+$spacing-directions: (
+  t: top,
+  l: left,
+  b: bottom,
+  r: right
+);
+$spacing-base-size: 1rem;
+$spacing-sizes: (
+  0: 0,
+  1: 0.25,
+  2: 0.5,
+  3: 1,
+  4: 1.5,
+  5: 3
+);

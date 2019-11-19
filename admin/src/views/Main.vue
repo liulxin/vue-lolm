@@ -49,7 +49,6 @@
         </el-submenu>
       </el-menu>
     </el-aside>
-
     <el-container>
       <el-header style="text-align: right; font-size: 12px">
         <el-dropdown @command="loginOut">
@@ -60,9 +59,8 @@
         </el-dropdown>
         <span>{{ name }}</span>
       </el-header>
-
       <el-main>
-        <router-view></router-view>
+        <router-view :key="$route.path"></router-view>
       </el-main>
     </el-container>
   </el-container>

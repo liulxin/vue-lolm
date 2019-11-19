@@ -1,17 +1,30 @@
 <template>
   <div class="about">
     <h2>{{ id ? '编辑' : '新建' }}文章</h2>
-    <el-form @submit.native.prevent="save" label-position="right" label-width="80px">
+    <el-form
+      @submit.native.prevent="save"
+      label-position="right"
+      label-width="80px"
+    >
       <el-form-item label="所属分类">
         <el-select v-model="model.categories" multiple placeholder="请选择">
-          <el-option v-for="item in categories" :key="item._id" :label="item.name" :value="item._id"></el-option>
+          <el-option
+            v-for="item in categories"
+            :key="item._id"
+            :label="item.name"
+            :value="item._id"
+          ></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="标题">
         <el-input v-model.trim="model.title"></el-input>
       </el-form-item>
       <el-form-item label="详情">
-        <vue-editor v-model.trim="model.body" useCustomImageHandler @image-added="handleImageAdded"></vue-editor>
+        <vue-editor
+          v-model.trim="model.body"
+          useCustomImageHandler
+          @image-added="handleImageAdded"
+        ></vue-editor>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" native-type="submit">保存</el-button>
@@ -74,14 +87,9 @@ export default {
       this.categories = res.data
     }
   },
-  // 处理菜单点击渲染未正常显示bug
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-      vm.model = { title: '', body: '', categories: [] }
-      vm.categories = []
-      vm.fetchCategories()
-      vm.id && vm.fetch()
-    })
+  mounted() {
+    this.fetchCategories()
+    this.id && this.fetch()
   },
   components: {
     VueEditor

@@ -110,12 +110,8 @@ export default {
       return isJPG && isLt2M
     }
   },
-  // 处理菜单点击渲染未正常显示bug
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-      vm.model = { name: '', items: [] }
-      vm.id && vm.fetch()
-    })
+  mounted() {
+    this.id && this.fetch()
   }
 }
 </script>

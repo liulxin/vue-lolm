@@ -275,33 +275,10 @@ export default {
       return isJPG && isLt2M
     }
   },
-  // 处理菜单点击渲染未正常显示bug
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-      vm.categories = []
-      vm.goods = []
-      vm.model = {
-        name: '',
-        avatar: '',
-        title: '',
-        scores: {
-          difficult: 1,
-          skills: 1,
-          attack: 1,
-          survive: 1
-        },
-        skills: [],
-        goods1: [],
-        goods2: [],
-        usageTips: '',
-        battleTips: '',
-        skins: [],
-        tale: ''
-      }
-      vm.fetchCategories()
-      vm.fetchGoods()
-      vm.id && vm.fetch()
-    })
+  mounted() {
+    this.fetchCategories()
+    this.fetchGoods()
+    this.id && this.fetch()
   }
 }
 </script>

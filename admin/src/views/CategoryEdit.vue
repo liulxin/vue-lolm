@@ -31,10 +31,7 @@ export default {
   props: ['id'],
   data() {
     return {
-      model: {
-        name: '',
-        parent: ''
-      },
+      model: {},
       parents: []
     }
   },
@@ -50,20 +47,25 @@ export default {
         return
       }
       // 是否是编辑
-      if (this.model.parent) {
-        if (this.id) {
-          res = await this.$http.put(`rest/categories/${this.id}`, this.model)
-        } else {
-          res = await this.$http.post('rest/categories', this.model)
-        }
+      // if (this.model.parent) {
+      //   if (this.id) {
+      //     res = await this.$http.put(`rest/categories/${this.id}`, this.model)
+      //   } else {
+      //     res = await this.$http.post('rest/categories', this.model)
+      //   }
+      // } else {
+      //   let obj = JSON.parse(JSON.stringify(this.model))
+      //   delete obj.parent
+      //   if (this.id) {
+      //     res = await this.$http.put(`rest/categories/${this.id}`, obj)
+      //   } else {
+      //     res = await this.$http.post('rest/categories', obj)
+      //   }
+      // }
+      if (this.id) {
+        res = await this.$http.put(`rest/categories/${this.id}`, this.model)
       } else {
-        let obj = JSON.parse(JSON.stringify(this.model))
-        delete obj.parent
-        if (this.id) {
-          res = await this.$http.put(`rest/categories/${this.id}`, obj)
-        } else {
-          res = await this.$http.post('rest/categories', obj)
-        }
+        res = await this.$http.post('rest/categories', this.model)
       }
 
       console.log(res)
@@ -82,14 +84,10 @@ export default {
       this.parents = res.data
     }
   },
-  // 处理菜单点击渲染未正常显示bug
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-      vm.model = { name: '', parent: '' }
-      vm.parents = []
-      vm.fetchParents()
-      vm.id && vm.fetch()
-    })
+  mounted() {
+    console.log(1)
+    this.fetchParents()
+    this.id && this.fetch()
   }
 }
 </script>
