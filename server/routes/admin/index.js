@@ -39,7 +39,7 @@ module.exports = app => {
     const items = await ctx.Model.find()
       // .populate('parent') // 关联查询
       .setOptions(queryOptions)
-      .limit(20)
+      // .limit(20)
     ctx.body = items
   })
 

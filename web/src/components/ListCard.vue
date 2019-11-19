@@ -14,6 +14,7 @@
     <div class="pt-2">
       <swiper
         ref="list"
+        :options="{autoHeight: true}"
         @slide-change="() => (active = $refs.list.swiper.realIndex)"
       >
         <swiper-slide v-for="(category, i) in categories" :key="i">

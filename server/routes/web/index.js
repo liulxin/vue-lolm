@@ -9,6 +9,7 @@ module.exports = app => {
   const Category = mongoose.model('Category')
   const Article = mongoose.model('Article')
   const Ad = mongoose.model('Ad')
+  const Hero = mongoose.model('Hero')
 
   // 导入新闻数据
   webrouter.get('/news/init', async ctx => {
@@ -158,8 +159,75 @@ module.exports = app => {
   // 获取轮播数据
   webrouter.get('/ads/list', async ctx => {
     const ads = await Ad.find({ name: '轮播' }).lean()
-    const list = ads.length ?  ads[0].items : []
+    const list = ads.length ? ads[0].items : []
     ctx.body = list
+  })
+
+  // 写入英雄数据
+  webrouter.get('/heros/init', async ctx => {
+    const heros = require('../../data/hero').hero
+    await Hero.deleteMany({})
+    // 插入英雄职业分类
+    const parent = await Category.findOne({ name: '英雄职业' })
+    const heroCats = [
+      { name: '战士', role: 'fighter' },
+      { name: '法师', role: 'mage' },
+      { name: '刺客', role: 'assassin' },
+      { name: '坦克', role: 'tank' },
+      { name: '射手', role: 'marksman' },
+      { name: '辅助', role: 'support' }
+    ]
+    await Category.deleteMany({ parent: parent._id })
+    await Category.insertMany(
+      heroCats.map(v => Object.assign({}, v, { parent: parent._id }))
+    )
+    const heros_ = await Category.find({ parent: parent._id })
+    const list = heros.map(hero => {
+      const categories = hero.roles
+        .map(v => heroCats.find(cat => cat.role === v).name)
+        .map(v => {
+          return heros_.find(hero_ => hero_.name === v)._id
+        })
+      return {
+        name: hero.name,
+        avatar: `//ossweb-img.qq.com/images/lol/img/champion/${hero.alias}.png`,
+        title: hero.title,
+        categories: categories
+      }
+    })
+
+    await Hero.deleteMany({})
+    await Hero.insertMany(list)
+    ctx.body = await Hero.find()
+  })
+
+  webrouter.get('/heros/list', async ctx => {
+    const parent = await Category.findOne({
+      name: '英雄职业'
+    })
+    // 聚合查询
+    const cats = await Category.aggregate([
+      { $match: { parent: parent._id } },
+      {
+        $lookup: {
+          from: 'heroes', // heross --> 写 heroes-> collection 有问题？
+          localField: '_id',
+          foreignField: 'categories',
+          as: 'heroList'
+        }
+      }
+    ])
+    const subCats = cats.map(v => v._id)
+    cats.unshift({
+      name: '热门',
+      heroList: await Hero.find()
+        .where({
+          categories: { $in: subCats }
+        })
+        .limit(10)
+        .lean()
+    })
+    ctx.body = cats
   })
 
   router.use('/web/api', webrouter.routes(), webrouter.allowedMethods())

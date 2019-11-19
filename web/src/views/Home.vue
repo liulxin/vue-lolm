@@ -57,6 +57,19 @@
         </div>
       </template>
     </list-card>
+    <!-- end of news -->
+    <list-card title="英雄列表" :categories="herosList">
+      <template #items="{category}">
+        <div class="d-flex flex-wrap" style="margin: 0 -0.5rem;">
+          <div class="text-center p-2 fs-xss" style="width: 20%" v-for="(hero, i) in category.heroList" :key="i">
+            <img class="w-100" :src="hero.avatar" alt="">
+            <div>{{hero.title.slice(0, 4)}}</div>
+          </div>
+        </div>
+      </template>
+    </list-card>
+    <!-- end of heros -->
+    <list-card title="精彩视频"></list-card>
   </div>
 </template>
 
@@ -78,12 +91,14 @@ export default {
       },
       collapse: true,
       newsCats: [],
-      adsList: []
+      adsList: [],
+      herosList: []
     }
   },
   created() {
     this.fetchNewsCats()
     this.fetchAdsList()
+    this.fetchHerosList()
   },
   methods: {
     async fetchNewsCats() {
@@ -93,6 +108,10 @@ export default {
     async fetchAdsList() {
       let res = await this.$http.get('ads/list')
       this.adsList = res.data
+    },
+    async fetchHerosList() {
+      let res = await this.$http.get('heros/list')
+      this.herosList = res.data
     }
   },
   components: {
@@ -103,7 +122,7 @@ export default {
 
 <style lang="scss">
 @import '../assets/scss/variables';
-.ads-a{
+.ads-a {
   display: inline-block;
 }
 .pagination-home {
