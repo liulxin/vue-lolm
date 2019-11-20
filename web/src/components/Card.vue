@@ -6,7 +6,7 @@
       <i class="sprite sprite-9" v-if="more"></i>
     </div>
     <div class="card-body pt-3">
-      <slot></slot>
+      <slot>''</slot>
     </div>
   </div>
 </template>

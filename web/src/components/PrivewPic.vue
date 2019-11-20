@@ -3,6 +3,7 @@
     class="priview-pic d-flex flex-column jc-center"
     :class="{ active: show }"
     @click.self="onClose"
+    v-if="items.length"
   >
     <div>
       <span class="text-white p-2"
