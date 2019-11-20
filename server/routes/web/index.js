@@ -201,6 +201,7 @@ module.exports = app => {
     ctx.body = await Hero.find()
   })
 
+  // 获取英雄数据
   webrouter.get('/heros/list', async ctx => {
     const parent = await Category.findOne({
       name: '英雄职业'
@@ -228,6 +229,29 @@ module.exports = app => {
         .lean()
     })
     ctx.body = cats
+  })
+
+  // 获取英雄详情数据
+  webrouter.get('/heros/:id', async ctx => {
+    const data = await Hero.findById(ctx.params.id)
+      .populate('categories')
+      .populate('goods1')
+      .populate('goods2')
+      .lean()
+    ctx.body = data
+  })
+
+  // 文章详情
+  webrouter.get('/article/:id', async ctx => {
+    const data = await Article.findById(ctx.params.id).lean()
+    data.related = await Article.find({
+      _id: { $ne: data._id }
+    })
+      .where({
+        categories: { $in: data.categories }
+      })
+      .limit(2)
+    ctx.body = data
   })
 
   router.use('/web/api', webrouter.routes(), webrouter.allowedMethods())

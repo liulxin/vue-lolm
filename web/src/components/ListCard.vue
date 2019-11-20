@@ -14,7 +14,7 @@
     <div class="pt-2">
       <swiper
         ref="list"
-        :options="{autoHeight: true}"
+        :options="{ autoHeight: true }"
         @slide-change="() => (active = $refs.list.swiper.realIndex)"
       >
         <swiper-slide v-for="(category, i) in categories" :key="i">
@@ -42,6 +42,12 @@ export default {
     return {
       active: 0
     }
+  },
+  mounted() {
+    // 修复autoHeight 因图片未获取全部导致高度不对的bug
+    this.$nextTick(() => {
+      this.$refs.list.swiper.updateSize()
+    })
   },
   components: {
     Card

@@ -3,7 +3,7 @@
     <div class="card-header d-flex ai-center pb-2">
       <i class="bl"></i>
       <div class="fs-xl flex-1 px-2">{{ title }}</div>
-      <i class="sprite sprite-9"></i>
+      <i class="sprite sprite-9" v-if="more"></i>
     </div>
     <div class="card-body pt-3">
       <slot></slot>
@@ -17,6 +17,10 @@ export default {
     title: {
       type: String,
       require: true
+    },
+    more: {
+      type: Boolean,
+      default: true
     }
   }
 }

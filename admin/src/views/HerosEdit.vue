@@ -27,6 +27,19 @@
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
           </el-form-item>
+          <el-form-item label="Banner">
+            <el-upload
+              class="avatar-uploader"
+              :action="`${$http.defaults.baseURL}/upload`"
+              :show-file-list="false"
+              :headers="getAuthHeaders()"
+              :on-success="handleBannerSuccess"
+              :before-upload="beforeAvatarUpload"
+            >
+              <img v-if="model.banner" :src="model.banner" class="avatar" />
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
+          </el-form-item>
           <el-form-item label="职业">
             <el-select v-model="model.categories" multiple>
               <el-option
@@ -42,7 +55,6 @@
               style="margin-top: 10px;"
               v-model.trim="model.scores.difficult"
               :max="10"
-              :allow-half="true"
               :show-score="true"
             ></el-rate>
           </el-form-item>
@@ -51,7 +63,6 @@
               style="margin-top: 10px;"
               v-model.trim="model.scores.attack"
               :max="10"
-              :allow-half="true"
               :show-score="true"
             ></el-rate>
           </el-form-item>
@@ -60,7 +71,6 @@
               style="margin-top: 10px;"
               v-model.trim="model.scores.skills"
               :max="10"
-              :allow-half="true"
               :show-score="true"
             ></el-rate>
           </el-form-item>
@@ -69,7 +79,6 @@
               style="margin-top: 10px;"
               v-model.trim="model.scores.survive"
               :max="10"
-              :allow-half="true"
               :show-score="true"
             ></el-rate>
           </el-form-item>
@@ -205,6 +214,7 @@ export default {
       model: {
         name: '',
         avatar: '',
+        banner: '',
         title: '',
         scores: {
           difficult: 1,
@@ -261,6 +271,10 @@ export default {
     handleAvatarSuccess(res, file) {
       // this.$set(this.model, 'avatar', res.url)
       this.model.avatar = res.url
+    },
+    handleBannerSuccess(res, file) {
+      // this.$set(this.model, 'avatar', res.url)
+      this.model.banner = res.url
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === 'image/jpeg' || file.type === 'image/png'

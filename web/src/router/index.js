@@ -7,15 +7,26 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'main',
     component: Main,
     children: [
       {
         path: '/',
         name: 'home',
         component: () => import('../views/Home.vue')
+      },
+      {
+        path: '/article/:id',
+        name: 'article',
+        props: true,
+        component: () => import('../views/Article.vue')
       }
     ]
+  },
+  {
+    path: '/hero/:id',
+    name: 'hero',
+    props: true,
+    component: () => import('../views/Hero.vue')
   }
 ]
 

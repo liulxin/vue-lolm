@@ -7,7 +7,10 @@
           <img class="w-100" :src="ad.image" alt="" />
         </a>
       </swiper-slide>
-      <div class="swiper-pagination pagination-home text-right px-3 pb-1" slot="pagination"></div>
+      <div
+        class="swiper-pagination pagination-home text-right px-3 pb-1"
+        slot="pagination"
+      ></div>
     </swiper>
     <!-- end of swiper -->
     <div class="nav-icons bg-white mt-3  text-center pt-3 text-dark-1 fs-xs">
@@ -41,35 +44,55 @@
           <div>微信绑定</div>
         </div>
       </div>
-      <div class="bg-light py-2 fs-sm text-center text-primary" @click="collapse = !collapse">
-        <i class="sprite sprite-9" :class="{ 'rotate--90': collapse, 'rotate-90': !collapse }"></i>
+      <div
+        class="bg-light py-2 fs-sm text-center text-primary"
+        @click="collapse = !collapse"
+      >
+        <i
+          class="sprite sprite-9"
+          :class="{ 'rotate--90': collapse, 'rotate-90': !collapse }"
+        ></i>
         {{ collapse ? '收起' : '展开' }}
       </div>
     </div>
     <!-- end of icons -->
     <list-card title="新闻资讯" :categories="newsCats">
       <template #items="{category}">
-        <div class="py-2 d-flex" v-for="(news, i) in category.newsList" :key="i">
+        <router-link
+          tag="div"
+          :to="`/article/${news._id}`"
+          class="py-2 d-flex"
+          v-for="(news, i) in category.newsList"
+          :key="i"
+        >
           <span class="text-primary">[{{ news.categoryName }}]</span>
           <span class="px-1"></span>
           <span class="flex-1 text-ellipse text-dark-1">{{ news.title }}</span>
           <span class="text-grey fs-sm">{{ news.createdAt | date }}</span>
-        </div>
+        </router-link>
       </template>
     </list-card>
     <!-- end of news -->
     <list-card title="英雄列表" :categories="herosList">
       <template #items="{category}">
         <div class="d-flex flex-wrap" style="margin: 0 -0.5rem;">
-          <div class="text-center p-2 fs-xss" style="width: 20%" v-for="(hero, i) in category.heroList" :key="i">
-            <img class="w-100" :src="hero.avatar" alt="">
-            <div>{{hero.title.slice(0, 4)}}</div>
-          </div>
+          <router-link
+            tag="div"
+            :to="`/hero/${hero._id}`"
+            class="text-center p-2 fs-xss"
+            style="width: 20%"
+            v-for="(hero, i) in category.heroList"
+            :key="i"
+          >
+            <img class="w-100" :src="hero.avatar" alt="" />
+            <div>{{ hero.title.slice(0, 4) }}</div>
+          </router-link>
         </div>
       </template>
     </list-card>
     <!-- end of heros -->
     <list-card title="精彩视频"></list-card>
+    <list-card title="热门专辑"></list-card>
   </div>
 </template>
 
