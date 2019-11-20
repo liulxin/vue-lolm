@@ -110,10 +110,4 @@ module.exports = app => {
   })
 
   app.use(router.routes()).use(router.allowedMethods())
-
-  // 错误处理
-  app.on('error', (err, ctx) => {
-    console.log(err)
-    ctx.body = 'sss'
-  })
 }
