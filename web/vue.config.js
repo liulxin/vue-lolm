@@ -10,6 +10,6 @@ module.exports = {
     // }
   },
   productionSourceMap: false,
-  outputDir: path.join(__dirname, '../server/web'),
-  publicPath: process.env.NODE_ENV === 'production' ? '/web/' : '/'
+  outputDir: path.join(__dirname, '../server/public/view'),
+  publicPath: process.env.NODE_ENV === 'production' ? '/view/' : '/'
 }
