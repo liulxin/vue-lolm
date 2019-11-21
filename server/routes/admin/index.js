@@ -72,7 +72,7 @@ module.exports = app => {
     authMiddleware(),
     async ctx => {
       const file = ctx.req.file
-      file.url = `http://localhost:3000/uploads/${file.filename}`
+      file.url = `http://lolm.noway.vip/uploads/${file.filename}`
       ctx.body = file
     }
   )
