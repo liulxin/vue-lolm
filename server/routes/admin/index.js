@@ -3,6 +3,7 @@ module.exports = app => {
   const router = new Router()
   const restrouter = new Router()
   const multer = require('koa-multer')
+  const MAO = require('multer-aliyun-oss')
   const path = require('path')
   const bcrypt = require('bcrypt')
   const jwt = require('jsonwebtoken')
@@ -65,6 +66,14 @@ module.exports = app => {
   // 单独处理上传路由
   const upload = multer({
     dest: path.resolve(__dirname, '../../public/uploads')
+    // storage: MAO({
+    //   config: {
+    //     region: 'oss-cn-shanghai',
+    //     accessKeyId: '',
+    //     accessKeySecret: '',
+    //     bucket: 'lolm-vue'
+    //   }
+    // })
   })
   router.post(
     '/admin/api/upload',
@@ -72,6 +81,7 @@ module.exports = app => {
     authMiddleware(),
     async ctx => {
       const file = ctx.req.file
+      // file.url = `http://lolm.noway.vip/uploads/${file.filename}`
       file.url = `http://lolm.noway.vip/uploads/${file.filename}`
       ctx.body = file
     }
