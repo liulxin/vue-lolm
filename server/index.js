@@ -25,6 +25,8 @@ require('./mongo/db')(app)
 require('./routes/admin')(app)
 require('./routes/web')(app)
 
+// app.on('error', err => {logger.error(err); });
+
 app.listen(3000, () => {
   console.log('serve is running at: http://localhost:3000')
 })
