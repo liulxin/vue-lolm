@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^5.0.0",
     "http-assert": "^1.4.1",
     "http-errors": "^1.7.3",
     "jsonwebtoken": "^8.5.1",
